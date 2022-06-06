@@ -10,7 +10,7 @@ public class Student {
     private int id;
     private String name;
     private String surname;
-    private Map<String,Boolean> tasks; //каждый студент будет иметь определенные задачи, String - название задачи, Boolean - статус выполнения этой задачи
+    private Map<String, Boolean> tasks; //каждый студент будет иметь определенные задачи, String - название задачи, Boolean - статус выполнения этой задачи
 
     public Student(int id, String name, String surname) {
         this.id = id;
@@ -34,6 +34,7 @@ public class Student {
     public void setName(String name) {
         this.name = name;
     }
+
     public void setSurname(String surname) {
         this.surname = surname;
     }
@@ -41,16 +42,21 @@ public class Student {
     public Map<String, Boolean> getTasks() {
         return tasks;
     }
+
     public void setTasks(Map<String, Boolean> tasks) {
-        this.tasks = new HashMap<>(tasks);
+        if (this.tasks == null) {
+            this.tasks = new HashMap<>(tasks);
+        }
     }
 
     public int getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }
+
     public String getSurname() {
         return surname;
     }

@@ -5,15 +5,16 @@ import java.util.*;
 public class Group {
 
     private Student leaderGroup; // староста группы
-    private Student[] groupStudents; //массив студентов в группе
+    private List<Student> groupStudents; //массив студентов в группе
     private Map<String, Boolean> tasks; //одинаковые задачи для всей группы
 
-    public Group(Student leaderGroup, Student[] groupStudents) {
-        if (leaderGroup == null) throw new NullPointerException("Нужно выбрать старосту группы!");
+    public Group(Student leaderGroup, List<Student> groupStudents) {
+        if (leaderGroup == null) throw new IllegalArgumentException("Нужно выбрать старосту группы!");
         //если старосты нет, то выбрасывается ошибка что нет старосты
         this.leaderGroup = leaderGroup;
         this.groupStudents = groupStudents;
         this.tasks = new HashMap<>(); //при создании группы, создаем коллекцию где изначально 0 задач
+        groupStudents.forEach(el -> el.setTasks(this.tasks)); //при создании группы, после создания объекта ЗАДАЧ, для каждого студента создается объект ИХ ЗАДАЧ
     }
 
     public void changeLeaderGroup() { //поменять старосту
@@ -25,7 +26,7 @@ public class Group {
         Scanner takeId = new Scanner(System.in);
         int id = takeId.nextInt();
 
-        this.leaderGroup = Arrays.stream(groupStudents).filter(el -> el.getId() == id)
+        this.leaderGroup = groupStudents.stream().filter(el -> el.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Нет такого id студента!!!"));
 
@@ -33,13 +34,7 @@ public class Group {
     }
 
     public void addStudentToGroup(Student newStudent) { //добавить нового студента
-        List<Student> array = new ArrayList<>();
-
-        Collections.addAll(array, groupStudents);
-
-        array.add(newStudent);
-
-        groupStudents = array.toArray(new Student[0]);
+        groupStudents.add(newStudent);
         System.out.println("Новый список студентов:");
         for (Student s : groupStudents) {
             System.out.println(s + " ");
@@ -56,13 +51,8 @@ public class Group {
     }
 
     public void deleteStudentInGroup(int idStudent) { //удалить студента по идентификатору
-        List<Student> array = new ArrayList<>();
+        groupStudents.remove(idStudent - 1);
 
-        Collections.addAll(array, groupStudents);
-
-        array.remove(idStudent - 1);
-
-        groupStudents = array.toArray(new Student[0]);
         System.out.println("Новый список без выбранного студента:");
         for (Student s : groupStudents) {
             System.out.println(s + " ");
@@ -72,7 +62,7 @@ public class Group {
     public void addNewTaskForStudents(String nameTask) { //добавить новую задачу для всех студентов группы
         tasks.put(nameTask, false);
         for (Student s : groupStudents) {
-            s.setTasks(tasks);
+            s.getTasks().put(nameTask,false); //у каждого студента берем таску и добавляем задачу
         }
         System.out.println("Новая задача добавлена");
         for (Student s : groupStudents) {

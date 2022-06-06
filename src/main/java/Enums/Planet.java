@@ -1,17 +1,17 @@
 package Enums;
 
 public enum Planet {
-    MERCURY(null,"VENUS", 0.0, 1),
-    VENUS("MERCURY","EARTH", 2.3, 2),
-    EARTH("VENUS","MARS", 4.5, 3),
-    MARS("EARTH","JUPITER", 5.6, 4),
-    JUPITER("MARS","SATURN", 7.5, 5),
-    SATURN("JUPITER","URANUS", 3.3, 6),
-    URANUS("SATURN","NEPTUNE", 3.2, 7),
-    NEPTUNE("URANUS",null, 0.1, 8);
+    MERCURY(null, 0.0, 1),
+    VENUS(MERCURY, 2.3, 2),
+    EARTH(VENUS, 4.5, 3),
+    MARS(EARTH, 5.6, 4),
+    JUPITER(MARS, 7.5, 5),
+    SATURN(JUPITER, 3.3, 6),
+    URANUS(SATURN, 3.2, 7),
+    NEPTUNE(URANUS, 0.1, 8);
 
-    private final String prevName;
-    private final String nextName;
+    private final Planet prevName;
+    private Planet nextName;
     private final double radius;
     private final double distanceFromSun;
     private final double distanceFromPrevPlanet;
@@ -19,10 +19,10 @@ public enum Planet {
     public double getDistanceFromPrevPlanet() {
         return distanceFromPrevPlanet;
     }
-    private String getPrevName() {
+    private Planet getPrevName() {
         return prevName;
     }
-    private String getNextName() {
+    private Planet getNextName() {
         return nextName;
     }
     public double getRadius() {
@@ -30,9 +30,11 @@ public enum Planet {
     }
 
 
-    Planet(String prevName, String nextName, double radius, double distanceFromPrevPlanet){
-        this.nextName = nextName;
+    Planet(Planet prevName, double radius, double distanceFromPrevPlanet){
         this.prevName = prevName;
+        if (prevName != null) {
+            prevName.nextName = this;
+        }
         this.radius = radius;
         this.distanceFromPrevPlanet = distanceFromPrevPlanet;
         distanceFromSun = count() + 10;
@@ -43,11 +45,11 @@ public enum Planet {
     }
 
     public Planet getPrevious(){
-        return Planet.valueOf(this.getPrevName());
+        return this.prevName;
     }
 
     public Planet getNext(){
-        return Planet.valueOf(this.getNextName());
+        return this.nextName;
     }
 
     public double getDistanceFromSun() {

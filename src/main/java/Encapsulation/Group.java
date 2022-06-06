@@ -28,7 +28,7 @@ public class Group {
 
         this.leaderGroup = groupStudents.stream().filter(el -> el.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new NullPointerException("Нет такого id студента!!!"));
+                .orElseThrow(() -> new IllegalArgumentException("Нет такого id студента!!!"));
 
         System.out.println("Новый староста группы: " + leaderGroup);
     }

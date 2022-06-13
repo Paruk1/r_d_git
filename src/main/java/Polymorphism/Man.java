@@ -12,8 +12,11 @@ public class Man extends Person{
 
     @Override
     public void registerPartnership(Person person) {
-        if(this.getPartner() != null || person.getPartner() != null){
-            throw new IllegalArgumentException("Брак уже есть");
+        if(person.getPartner() != null){
+            throw new IllegalArgumentException("Брак у вашего партнера уже есть");
+        }
+        if(this.getPartner() != null){
+            throw new IllegalStateException("Брак у вас уже есть");
         }
 
         ((Woman)person).setOldLastName(person.getLastName()); //сохраняем старую фамилию

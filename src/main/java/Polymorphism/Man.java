@@ -13,7 +13,7 @@ public class Man extends Person{
     @Override
     public void registerPartnership(Person person) {
         if(this.getPartner() != null || person.getPartner() != null){
-            System.out.println("Брак уже есть....");
+            throw new IllegalArgumentException("Брак уже есть");
         }
 
         ((Woman)person).setOldLastName(person.getLastName()); //сохраняем старую фамилию

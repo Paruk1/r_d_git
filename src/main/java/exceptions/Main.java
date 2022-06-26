@@ -11,12 +11,16 @@ public class Main {
             System.out.println(module.processPayment(55, "USD", "123") + " ответ успешный");
             System.out.println(module.processPayment(55, "USD", "123") + " ответ успешный");
 
-        } catch (InvalidPaymentAmountException ex) {
+        } catch (InvalidPaymentAmountException | BankProcessingFailedException ex) {
+            if(ex instanceof InvalidPaymentAmountException){
+                System.out.println("invalid payment amount ex" + ((InvalidPaymentAmountException) ex).getMessage());
+            }
+            if(ex instanceof BankProcessingFailedException){
+                System.out.println("BankProcessingFailedException" + ((BankProcessingFailedException) ex).getMessage());
+            }
             System.out.println(ex.getMessage() + " нужно вводить число > 0");
         } catch (InvalidPaymentCurrencyException ex) {
             System.out.println(ex.getMessage() + " вводите одно из: USD, EUR, JPY, CHF");
-        } catch (BankProcessingFailedException ex) {
-            System.out.println(ex.getMessage() + " увы, статус код > 5, попробуйте еще раз.");
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage() + " у вас параметр currency заполнен как null))"); //можно взять еще кейс когда currency null
         } catch (Exception ex){

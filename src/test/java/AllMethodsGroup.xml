@@ -6,6 +6,9 @@
             <class name="TestAllMethods">
 
             </class>
+            <class name="TestGetterAndSetters">
+
+            </class>
         </classes>
     </test>
 </suite>

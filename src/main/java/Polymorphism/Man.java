@@ -11,6 +11,21 @@ public class Man extends Person{
     }
 
     @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
     public void registerPartnership(Person person) {
         if(person.getPartner() != null){
             throw new IllegalArgumentException("Брак у вашего партнера уже есть");

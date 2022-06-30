@@ -23,8 +23,11 @@ public class Woman extends Person {
 
     @Override
     public void registerPartnership(Person person) {
-        if(this.getPartner() != null || person.getPartner() != null){
-            System.out.println("Брак уже есть....");
+        if (person.getPartner() != null) {
+            throw new IllegalArgumentException("Брак у вашего партнера уже есть");
+        }
+        if (this.getPartner() != null) {
+            throw new IllegalStateException("Брак у вас уже есть");
         }
 
         this.oldLastName = this.getLastName(); //сохраняем старую фамилию
@@ -39,12 +42,19 @@ public class Woman extends Person {
 
     @Override
     public void deregisterPartnership(boolean unRegister) {
-        if(unRegister) {
+        if (unRegister) {
             this.setLastName(this.getOldLastName());
             this.setOldLastName(null);
         }
         this.getPartner().setPartner(null);
         this.setPartner(null);
         System.out.println("Вы успешно разведены " + this.getLastName());
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "oldLastName='" + oldLastName + '\'' +
+                '}';
     }
 }
